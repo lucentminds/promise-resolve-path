@@ -1,0 +1,19 @@
+{
+	"name": "promise-resolve-path",
+	"date": "01-05-2017",
+	"description": "NodeJs module that resolves a file path or a list of file paths.",
+	"main": "promise-resolve-path.js",
+	"author": {
+		"name": "Scott Johnson"
+	},
+	"license": "MIT",
+	"version": "0.0.1",
+	"engine": "node 4.0.0",
+	"repository":{
+		"type": "git",
+		"url": "https://github.com/lucentminds/promise-resolve-path.git"
+	},
+	"dependencies": {
+		"q": ">=1.4.1"
+	}
+}
