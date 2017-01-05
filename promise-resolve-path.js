@@ -45,9 +45,9 @@ var resolvePath = module.exports = function( aPaths, lExists ){
      */
     for( i = 0, l = aSources.length; i < l; i++ ) {
         aPromises.push( resolveOnePath( aSources[ i ], lExists ) );
-
     }// /for()
 
+    // Either wait for all paths to be resolved or reject one.
     Q.all( aPromises ).done(
         // All resolved.
         function( aResolved ){
@@ -68,36 +68,27 @@ var resolvePath = module.exports = function( aPaths, lExists ){
     return deferred.promise;
 };// /resolve()
 
+/** 
+ * This function asychronously resolves one path string.
+ */
 var resolveOnePath = function( cPath, lExists ) {
     var deferred = Q.defer();
-    var cFullPath = path.resolve( cPath );
-    
+    var cFullPath = path.resolve( cPath );    
 
     if( lExists ){
+        // Validate if path exists.
         fs.lstat( cFullPath, function( err ){
             if( err ) {
-                deferred.reject( cFullPath );
+               return deferred.reject( cFullPath );
             }
-            else {
-                deferred.resolve( cFullPath );
-            }
-
+        
+            deferred.resolve( cFullPath );
         });
     }
     else {
+        // Return path with no validation.
         deferred.resolve( cFullPath );
     }
 
     return deferred.promise;
 };// /resolveOnePath()
-
-// var fileExists = function( cFile ) {
-//     try{
-//         fs.lstatSync( cFile );
-//     }
-//     catch( e ){
-//         return false;
-//     }
-
-//     return true;
-// };// /fileExists()
