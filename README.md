@@ -1,6 +1,14 @@
 # promise-resolve-path
 NodeJs module that resolves a file path or a list of file paths.
 
+## Installation
+
+Install by npm.
+
+```shell
+npm install git+https://github.com/lucentminds/promise-resolve-path.git
+```
+
 ### Useage:
 
 ```js
