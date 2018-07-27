@@ -11,6 +11,7 @@
 
 var path = require( 'path' );
 var fs = require( 'fs' );
+var os = require( 'os' );
 var Q = require( 'q' );
 
 var resolvePath = module.exports = function( aPaths, lExists ){
@@ -73,7 +74,16 @@ var resolvePath = module.exports = function( aPaths, lExists ){
  */
 var resolveOnePath = function( cPath, lExists ) {
     var deferred = Q.defer();
-    var cFullPath = path.resolve( cPath );    
+    var cFullPath;
+    var aParts = cPath.split( path.sep );
+
+    // Check for home directory.
+    if( aParts[0] == '~' )
+    {
+        aParts[0] = os.homedir();
+    }
+    
+    cFullPath = path.resolve( aParts.join( path.sep ) );
 
     if( lExists ){
         // Validate if path exists.
