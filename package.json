@@ -16,6 +16,5 @@
 		"url": "https://github.com/lucentminds/promise-resolve-path.git"
 	},
 	"dependencies": {
-		"q": ">=1.4.1"
 	}
 }
