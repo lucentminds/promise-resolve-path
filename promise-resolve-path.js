@@ -49,7 +49,7 @@ async function resolve_path( aPaths, lExists ){
 
     // Either wait for all paths to be resolved or reject one.
     try{
-        const aResolved = await Promise.allSettled( aPromises );
+        const aResolved = await Promise.all( aPromises );
         if( cPathType === 'string' )  {
             deferred.resolve( aResolved[0] );
         }
