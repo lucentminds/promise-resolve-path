@@ -13,7 +13,7 @@ var path = require( 'path' );
 var fs = require( 'fs' );
 var os = require( 'os' );
 
-function resolve_path( aPaths, lExists ){
+async function resolve_path( aPaths, lExists ){
     var deferred = defer();
     var i, l, cFullPath;
     var aSources;
@@ -48,22 +48,18 @@ function resolve_path( aPaths, lExists ){
     }// /for()
 
     // Either wait for all paths to be resolved or reject one.
-    Q.all( aPromises ).done(
-        // All resolved.
-        function( aResolved ){
-            if( cPathType === 'string' )  {
-                deferred.resolve( aResolved[0] );
-            }
-            else {
-                deferred.resolve( aResolved );
-            }
-        },
-
-        // One rejected.
-        function( cFullPath ){
-            deferred.reject( 'Path does not exist: '.concat( cFullPath ) );
-        });
-
+    try{
+        const aResolved = await Promise.allSettled( aPromises );
+        if( cPathType === 'string' )  {
+            deferred.resolve( aResolved[0] );
+        }
+        else {
+            deferred.resolve( aResolved );
+        }
+    }
+    catch( cFullPath ){
+        deferred.reject( 'Path does not exist: '.concat( cFullPath ) );
+    }
 
     return deferred.promise;
 };// /resolve_path()
