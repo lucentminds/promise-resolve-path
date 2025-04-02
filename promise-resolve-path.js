@@ -14,7 +14,7 @@ var fs = require( 'fs' );
 var os = require( 'os' );
 
 function resolve_path( aPaths, lExists ){
-    var deferred = deferred();
+    var deferred = defer();
     var i, l, cFullPath;
     var aSources;
     var aPromises;
@@ -72,7 +72,7 @@ function resolve_path( aPaths, lExists ){
  * This function asychronously resolves one path string.
  */
 function resolveOnePath( cPath, lExists ) {
-    var deferred = deferred();
+    var deferred = defer();
     var cFullPath;
     var aParts = cPath.split( path.sep );
 
@@ -102,7 +102,7 @@ function resolveOnePath( cPath, lExists ) {
     return deferred.promise;
 };// /resolveOnePath()
 
-function deferred(){
+function defer(){
     let resolve, reject;
     const o_promise = new Promise((res, rej) => {
         resolve = res;
@@ -115,6 +115,6 @@ function deferred(){
     };
 
     return o_deferred;
-}// /deferred()
+}// /defer()
 
 module.exports = resolve_path;
